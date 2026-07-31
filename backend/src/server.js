@@ -23,3 +23,10 @@ const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
   console.log(`server running on port ${PORT}`)
 })
+
+// Start worker in production (Render, Railway, etc)
+if (process.env.NODE_ENV === 'production' || process.env.RENDER) {
+  import('./queue/decisionWorker.js').then(() => {
+    console.log('decision worker started alongside server')
+  })
+}
